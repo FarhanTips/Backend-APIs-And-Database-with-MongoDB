@@ -19,22 +19,38 @@ app.use(express.json());
 const client = new MongoClient(process.env.MONGODB_CLIENT);
 
 export async function connectToMongoDB() {
-  try {
-    await client.connect();
-    console.log("Successfully connected to MongoDB!");
-    return client;
-  } catch (err) {
-    console.dir(err);
-  }
+    try {
+        await client.connect();
+        console.log("Successfully connected to MongoDB!");
+        return client;
+    } catch (err) {
+        console.dir(err);
+    }
 }
 
-await connectToMongoDB();
+const connectedClient = await connectToMongoDB();
 
+const database = connectedClient.db("simpleCrudDB");
+const users = database.collection("users");
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+    res.send('Hello World!');
+});
+
+app.get('/users', async (req, res) => {
+    const cursor = users.find({});
+    const allUsers = await cursor.toArray();
+    res.send(allUsers);
+});
+
+app.post('/users', async (req, res) => {
+    const newUser = req.body;
+    console.log("Adding new user", newUser);
+
+    const result = await users.insertOne(newUser);
+    res.send(result);
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+    console.log(`Example app listening on port ${port}`);
 });
