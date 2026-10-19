@@ -2,7 +2,7 @@
 
 import express from 'express';
 import cors from 'cors';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import 'dotenv/config'
 
 
@@ -43,11 +43,31 @@ app.get('/users', async (req, res) => {
     res.send(allUsers);
 });
 
+app.get('/users/:id', async (req, res) => {
+    // console.log("params in the server", req.params)
+    const id = req.params.id
+    // console.log("params in the server", id)
+    const query = {_id: new ObjectId(id)}
+
+    const result = await users.findOne(query);
+    res.send(result);
+});
+
 app.post('/users', async (req, res) => {
     const newUser = req.body;
     console.log("Adding new user", newUser);
 
     const result = await users.insertOne(newUser);
+    res.send(result);
+});
+
+app.delete('/users/:id', async (req, res) => {
+    console.log("params in the server", req.params)
+    const id = req.params.id
+    console.log("params in the server", id)
+    const query = {_id: new ObjectId(id)}
+
+    const result = await users.deleteOne(query);
     res.send(result);
 });
 
