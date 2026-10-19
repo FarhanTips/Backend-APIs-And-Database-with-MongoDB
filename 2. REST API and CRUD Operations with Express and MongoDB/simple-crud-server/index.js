@@ -71,6 +71,26 @@ app.delete('/users/:id', async (req, res) => {
     res.send(result);
 });
 
+app.patch('/users/:id', async (req, res) => {
+    // console.log("patch req.params", req.params);
+    const id = req.params.id
+    // console.log("patch id", id);
+    const updateUser = req.body;
+    const filter= {_id: new ObjectId(id)}
+
+    const options = {upsert: true};
+
+    const updateDoc = {
+        $set: {
+            name: updateUser.name,
+            email: updateUser.email
+        }
+    }
+
+    const result = await users.updateOne(filter, updateDoc, options);
+    res.send(result);
+});
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
