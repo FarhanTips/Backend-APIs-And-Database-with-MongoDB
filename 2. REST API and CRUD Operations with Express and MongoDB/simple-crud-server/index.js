@@ -46,7 +46,7 @@ app.get('/users', async (req, res) => {
 app.get('/users/:id', async (req, res) => {
     // console.log("params in the server", req.params)
     const id = req.params.id
-    // console.log("params in the server", id)
+    console.log("params in the server get one user", id);
     const query = {_id: new ObjectId(id)}
 
     const result = await users.findOne(query);
