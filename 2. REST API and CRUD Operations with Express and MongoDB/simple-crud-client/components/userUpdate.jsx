@@ -12,10 +12,14 @@ import {
 import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
 
 export default function UserUpdate({ user }) {
 
-    const handleUserUpdate = (e) => {
+    const router = useRouter();
+
+    const handleUserUpdate = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const data = {};
@@ -24,6 +28,23 @@ export default function UserUpdate({ user }) {
             data[key] = value.toString();
         });
         console.log("after submitting form", data);
+
+        const res = await fetch(`http://localhost:5000/users/${user._id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+
+        });
+
+        const afterUpdate = await res.json();
+        console.log("afterUpdate", afterUpdate);
+
+        if (afterUpdate.modifiedCount > 0){
+            toast.success(`User updated successfully!`);
+            router.refresh();
+        }
     };
     return (
         <Dialog>
@@ -50,7 +71,7 @@ export default function UserUpdate({ user }) {
                     </FieldGroup>
                     <DialogFooter>
                         <DialogClose render={<Button variant="outline">Cancel</Button>} />
-                        <Button type="submit">Save changes</Button>
+                        <DialogClose render={<Button type="submit">Save changes</Button>} />
                     </DialogFooter>
                 </form>
             </DialogContent>
