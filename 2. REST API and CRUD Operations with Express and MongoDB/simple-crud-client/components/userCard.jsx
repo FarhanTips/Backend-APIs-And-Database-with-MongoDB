@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import UserUpdate from "./userUpdate";
 
 const UserCard = ({ user }) => {
     const router = useRouter();
@@ -49,6 +50,7 @@ const UserCard = ({ user }) => {
                 <Button variant="destructive" onClick={() => handleDeleteButton(user._id)}>
                     Delete
                 </Button>
+                <UserUpdate user={user}></UserUpdate>
             </CardFooter>
         </Card>
     );
