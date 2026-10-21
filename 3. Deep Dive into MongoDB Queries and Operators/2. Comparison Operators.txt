@@ -1,0 +1,23 @@
+
+// Find all documents where location is exactly "Dhaka"
+db.jobs.find({ location: { $eq: "Dhaka" } })
+
+// Find all documents where location is NOT equal to "Dhaka"
+db.jobs.find({ location: { $ne: "Dhaka" } })
+
+// Explanation: location-কে {}-এর মধ্যে রাখতেই হবে, কারণ MongoDB-র query object এভাবেই লেখা হয়। কিন্তু location-এর value হিসেবে আরেকটি {} লাগবে শুধু তখনই, যখন operator-সহ object ব্যবহার করছ।
+
+
+
+// Find all jobs where isRemote is true
+db.jobs.find({ isRemote: { $eq: true } })
+
+// Find all jobs where salary is greater than 70000
+db.jobs.find({ salary: { $gt: 70000 } })
+
+// Find all jobs where salary is greater than or equal to 70000
+db.jobs.find({ salary: { $gte: 70000 } })
+
+// Find all jobs where salary is less than 70000
+db.jobs.find({ salary: { $lt: 70000 } })
+
