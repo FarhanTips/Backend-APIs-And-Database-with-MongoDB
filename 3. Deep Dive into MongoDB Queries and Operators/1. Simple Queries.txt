@@ -1,0 +1,14 @@
+// Find all documents in the jobs collection
+db.jobs.find()
+
+// Count the total number of documents in the jobs collection
+db.jobs.countDocuments()
+
+
+
+
+// Explanation:
+
+// db → বর্তমানে selected database, যেমন companyDB
+// jobs → সেই database-এর jobs collection
+// find() → ওই collection-এর সব document খুঁজে বের করে।
