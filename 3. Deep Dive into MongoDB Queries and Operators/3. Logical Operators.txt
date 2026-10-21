@@ -1,0 +1,52 @@
+
+// Find jobs where location is "Dhaka" AND salary is greater than or equal to 70000
+db.jobs.find({
+    $and: [
+        { location: "Dhaka" },       // Job location must be Dhaka
+        { salary: { $gte: 70000 } }  // Salary must be at least 70000
+    ]
+})
+
+
+// Find jobs where salary is greater than 70000 OR the job is remote
+db.jobs.find({
+    $or: [
+        { salary: { $gt: 70000 } }, // Salary must be greater than 70000
+        { isRemote: true }          // Job must be remote
+    ]
+})
+
+
+
+// Find jobs where either option 1 OR option 2 is true
+db.jobs.find({
+    $or: [
+        // Option 1: Job location is NOT Dhaka
+        { location: { $ne: "Dhaka" } },
+
+        // Option 2: Job location is Dhaka AND salary is at least 70000
+        {
+            $and: [
+                { location: "Dhaka" },          // Job location must be Dhaka
+                { salary: { $gte: 70000 } }     // Salary must be greater than or equal to 70000
+            ]
+        }
+    ]
+})
+
+
+
+
+
+
+
+// Find jobs where neither condition is true:
+
+db.jobs.find({
+    $nor: [
+        { location: "Dhaka" }, // Exclude jobs located in Dhaka
+        { isRemote: true }     // Exclude remote jobs
+    ]
+})
+
+
