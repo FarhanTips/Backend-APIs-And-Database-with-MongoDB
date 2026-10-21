@@ -1,0 +1,23 @@
+// Update the first job where the title is "Software Engineer"
+db.jobs.updateOne(
+    { title: "Software Engineer" },
+    {
+        $set: {
+            salary: 80000,       // Set the salary to 80000
+            status: "hiring",    // Set the status to "hiring"
+            updatedAt: new Date() // Set the current date and time
+        }
+    }
+)
+
+
+db.jobs.find({title: "Software Engineer"})
+
+
+// Decrease the applicants count by 5 for the first job titled "Data Analyst"
+db.jobs.updateOne( 
+{ title: "Data Analyst" }, 
+{ $inc: { applicants: -5 } } 
+) 
+
+db.jobs.find()
