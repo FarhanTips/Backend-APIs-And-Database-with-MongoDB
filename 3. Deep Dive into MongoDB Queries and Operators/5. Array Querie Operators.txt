@@ -1,0 +1,32 @@
+
+// Find jobs where the skills array contains either "Python" or "JavaScript"
+db.jobs.find({
+    skills: { $in: ["Python", "JavaScript"] }
+})
+
+
+
+// Find jobs located in Dhaka, Chittagong, or Sylhet
+db.jobs.find({
+    location: { $in: ["Dhaka", "Chittagong", "Sylhet"] }
+})
+
+
+
+// Find jobs where skills contains neither "Python" nor "JavaScript"
+db.jobs.find({
+    skills: { $nin: ["Python", "JavaScript"] }
+})
+
+
+// Find jobs where the skills array contains BOTH "Python" and "SQL"
+db.jobs.find({
+    skills: { $all: ["Python", "SQL"] }
+})
+
+
+
+// Find jobs where the skills array contains exactly 3 elements
+db.jobs.find({
+    skills: { $size: 3 }
+})

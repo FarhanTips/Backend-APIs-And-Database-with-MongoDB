@@ -1,0 +1,17 @@
+
+// Find all jobs where the salary field exists
+db.jobs.find({salary: {$exists: true}})
+
+// salary → The field we want to check.
+// $exists: true → Matches documents where the salary field exists, even if its value is null.
+
+
+
+
+
+// Find all jobs where the skills field is an array
+db.jobs.find({ skills: { $type: "array" } })
+
+// Find all jobs where the title field is a number
+db.jobs.find({ title: { $type: "number" } })
+
