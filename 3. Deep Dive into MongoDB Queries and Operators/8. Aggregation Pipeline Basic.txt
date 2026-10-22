@@ -1,0 +1,61 @@
+// Find only the jobs where the status field is "active" using the $match stage in the aggregation pipeline
+db.jobs.aggregate([
+    { $match: { status: "active" } }
+])
+// $match সাধারণত pipeline-এর শুরুেত দওয়ো হয় — এটো ডটো কিমেয় দয় তাই পরের ধাপগুেলো দ্রুত হয়।
+
+
+// Group all jobs by location and count how many jobs exist in each location
+db.jobs.aggregate([
+    {
+        $group: {
+            _id: "$location",       // Group jobs by their location field
+            totalJobs: { $sum: 1 }  // Count each job as 1 and calculate the total per group
+        }
+    }
+])
+
+
+
+
+
+// Group jobs by location, calculate the average salary, and count total jobs in each location
+db.jobs.aggregate([
+    {
+        $group: {
+            _id: "$location",       // Group jobs by location (e.g., Dhaka, Chittagong)
+            avgSalary: { $avg: "$salary" }, // Calculate the average salary of jobs in each location
+            totalJobs: { $sum: 1 }  // Count the total number of jobs in each location
+        }
+    }
+])
+
+
+
+
+
+// Return only the title and company fields from each job, excluding the _id field
+db.jobs.aggregate([
+    {
+        $project: {
+            title: 1,   // Include the title field in the output
+            company: 1, // Include the company field in the output
+            _id: 0      // Exclude the _id field from the output
+        }
+    }
+])
+
+
+
+// Return each job's title and salary, create monthlySalary using salary,
+// and calculate annualSalary by multiplying salary by 12
+db.jobs.aggregate([
+    {
+        $project: {
+            title: 1,   // Include the title field
+            salary: 1,  // Include the salary field
+            monthlySalary: "$salary", // Copy salary into a new field named monthlySalary
+            annualSalary: { $multiply: ["$salary", 12] } // Calculate annual salary: salary × 12
+        }
+    }
+])
