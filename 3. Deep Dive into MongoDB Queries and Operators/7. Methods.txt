@@ -1,0 +1,30 @@
+
+
+
+// Find all jobs and display only the title, company, and salary fields
+db.jobs.find( 
+{}, 
+{ title: 1, company: 1, salary: 1 } 
+// _id is also included by default
+)
+
+
+
+// Find all jobs, show only title and salary (exclude _id), and sort by salary from highest to lowest
+db.jobs.find({}, { title: 1, salary: 1, _id: 0 }).sort({ salary: -1 }) 
+
+
+// Find all jobs and sort by location alphabetically (A–Z), then by salary from lowest to highest within each location
+db.jobs.find().sort({ location: 1, salary: 1 }) 
+
+
+
+// Find and return a maximum of 5 documents from the jobs collection
+db.jobs.find().limit(5)
+
+
+
+
+// Skip the first 5 documents and return the next 5 documents from the jobs collection
+db.jobs.find().skip(5).limit(5)
+
